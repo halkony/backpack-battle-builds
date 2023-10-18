@@ -18,7 +18,7 @@ onMounted(() => {
 
   let container = document.getElementById("canvas");
   const renderer = new THREE.WebGLRenderer();
-  renderer.setSize(container.width, container.height);
+  renderer.setSize(container.clientWidth, container.clientHeight);
   container.appendChild(renderer.domElement);
 
   const geometry = new THREE.BoxGeometry(1, 1, 1);
@@ -120,7 +120,7 @@ body {
 // @import "@/assets/main.scss";
 #canvas {
   background: #999999;
-  height: 200px;
+  height: 500px;
   width: 500px;
   margin: 10px;
 }
