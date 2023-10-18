@@ -1,52 +1,56 @@
 <script setup>
-import * as THREE from "three";
-import {onMounted} from "vue";
+import * as PIXI from "pixi.js";
+import { onMounted } from "vue";
+import AceOfSpades from "./AceOfSpades.png";
 
 onMounted(() => {
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
+  const app = new PIXI.Application({
+    background: "#1099bb",
+    width: 640,
+    height: 360
+  });
+  let sprite = PIXI.Sprite.from(AceOfSpades);
+  app.stage.addChild(sprite);
+  var graphics = new PIXI.Graphics();
+  graphics.beginFill(0xFFFF00);
+  // set the line style to have a width of 5 and set the color to red
+    graphics.lineStyle(5, 0xFF0000);
 
-  let container = document.getElementById("canvas");
-  const renderer = new THREE.WebGLRenderer();
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  container.appendChild(renderer.domElement);
+    // draw a rectangle
+    graphics.drawRect(0, 0, 300, 200);
 
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
+    app.stage.addChild(graphics);
 
-  camera.position.z = 5;
-
-  function animate() {
-    requestAnimationFrame(animate);
-
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-
-    renderer.render(scene, camera);
-  }
-
-  animate();
+  let elapsed = 0.0;
+      app.ticker.add((delta) => {
+        elapsed += delta;
+        sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
+        sprite.rotation += 0.05;
+    });
+//   let container = document.body.getElementById("canvas");
+  document.body.appendChild(app.view);
 });
+
+
 </script>
 
 <template>
+  <!--
+                        GOALS:
+                Create a 4x4 grid
+                Create a 1x2 item.
+                Place and rotate the item on the grid
+    -->
   <div id="canvas">
     <!-- grid - 7 slots tall, 9 slots wide -->
   </div>
 </template>
 
 <style>
-#canvas {
+/* #canvas {
   background: #999999;
   height: 500px;
   width: 500px;
   margin: 10px;
-}
+} */
 </style>

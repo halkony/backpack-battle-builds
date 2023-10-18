@@ -8,11 +8,11 @@ import SocialBar from "./SocialBar.vue";
 </script>
 
 <template>
-  <Header></Header>
+  <!-- <Header></Header> -->
   <div class="main-app">
     <Backpack></Backpack>
     <!-- a button that says, share this build! -->
-    <SocialBar></SocialBar>
+    <!-- <SocialBar></SocialBar> -->
   </div>
 
   <!-- a div containing all items that can be click and dragged -->
