@@ -14,7 +14,9 @@
     "contentful": "^10.6.2",
     "pinia": "^2.1.6",
     "sass": "^1.69.3",
-    "vue": "^3.3.4"
+    "three": "^0.157.0",
+    "vue": "^3.3.4",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.3.4",
