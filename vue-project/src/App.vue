@@ -8,7 +8,7 @@ import SocialBar from "./SocialBar.vue";
 </script>
 
 <template>
-  <!-- <Header></Header> -->
+  <Header></Header>
   <div class="main-app">
     <Backpack></Backpack>
     <!-- a button that says, share this build! -->
@@ -43,6 +43,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #777777;
+  background: #bbbbbb;
 }
 </style>
