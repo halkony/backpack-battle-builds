@@ -112,7 +112,7 @@ function onDragStart() {
   // the reason for this is because of multitouch
   // we want to track the movement of this particular touch
   // this.data = event.data;
-  //   this.alpha = 0.5;
+    this.alpha /= 2;
   dragTarget = this;
   app.stage.on("pointermove", onDragMove);
 }
@@ -120,7 +120,7 @@ function onDragStart() {
 function onDragEnd() {
   if (dragTarget) {
     app.stage.off("pointermove", onDragMove);
-    // dragTarget.alpha = 1;
+    dragTarget.alpha *= 2;
     dragTarget = null;
   }
 }
