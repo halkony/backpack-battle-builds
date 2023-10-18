@@ -106,6 +106,9 @@ app.stage.on('pointerupoutside', onDragEnd);
     if (event.code === 'KeyR') {
       dragTarget.rotation += 90;
     }
+    if (event.code === 'KeyE') {
+      dragTarget.rotation -= 90;
+    }
   });});
 </script>
 
