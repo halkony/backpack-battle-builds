@@ -39,6 +39,7 @@ import SocialBar from "./SocialBar.vue";
 }
 
 body {
+  font-family: sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;

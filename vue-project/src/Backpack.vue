@@ -3,6 +3,7 @@ import * as PIXI from "pixi.js";
 import { onMounted } from "vue";
 import notbagsJSON from "./notbags.json";
 import bagsJSON from "./bags.json";
+import { Layer } from "@pixi/layers";
 
 // make sure the bags are on a lower layer than the items
 
@@ -37,12 +38,18 @@ app.stage.eventMode = "static";
 app.stage.hitArea = app.screen;
 app.stage.on("pointerup", onDragEnd);
 app.stage.on("pointerupoutside", onDragEnd);
-
+app.stage.sortableChildren = true;
 
 function createItem(itemName, x, y) {
   // create our little bunny friend..
-  const texture = PIXI.Texture.from(`http://backpack-battles.s3.amazonaws.com/items/${itemName}.png`);
+  const texture = PIXI.Texture.from(
+    `http://backpack-battles.s3.amazonaws.com/items/${itemName}.png`
+  );
   const item = new PIXI.Sprite(texture);
+
+  if (bagsJSON.includes(itemName)) {
+    item.alpha = 0.6;
+  }
 
   // enable the bunny to be interactive... this will allow it to respond to mouse and touch events
   item.eventMode = "static";
@@ -56,7 +63,7 @@ function createItem(itemName, x, y) {
   // item.pivot.set(item.width / 2, item.height / 2);
 
   // make it a bit bigger, so it's easier to grab
-  item.scale.set(SLOT_SIZE * .006);
+  item.scale.set(SLOT_SIZE * 0.006);
 
   // setup events for mouse + touch using
   // the pointer events
@@ -71,9 +78,9 @@ function createItem(itemName, x, y) {
 }
 
 let addItemToBackpack = (itemName) => {
-    console.log(`Adding ${itemName} to backpack...`);
-    createItem(itemName, 500, 500)
-}
+  console.log(`Adding ${itemName} to backpack...`);
+  createItem(itemName, 300, 300);
+};
 
 onMounted(() => {
   document.body.appendChild(app.view);
@@ -102,7 +109,7 @@ function onDragStart() {
   // the reason for this is because of multitouch
   // we want to track the movement of this particular touch
   // this.data = event.data;
-  this.alpha = 0.5;
+  //   this.alpha = 0.5;
   dragTarget = this;
   app.stage.on("pointermove", onDragMove);
 }
@@ -110,12 +117,12 @@ function onDragStart() {
 function onDragEnd() {
   if (dragTarget) {
     app.stage.off("pointermove", onDragMove);
-    dragTarget.alpha = 1;
+    // dragTarget.alpha = 1;
     dragTarget = null;
   }
 }
 
-createItem("AceofSpades", 100, 100)
+createItem("AceofSpades", 100, 100);
 app.stage.addChild(graphics);
 
 let elapsed = 0.0;
@@ -132,17 +139,38 @@ app.ticker.add((delta) => {
                 Create a 1x2 item.
                 Place and rotate the item on the grid
     -->
-  <select name="selectedItem" id="selectedItem" v-model="selectedItem">
-    <option v-for="notbag in notbagsJSON" :value="notbag">{{ notbag }}</option>
-  </select>
-  <button @click="addItemToBackpack(selectedItem)">Add to Backpack</button>
+  <div class="select-area">
+    <span class="subtitle">Items</span>
+    <div class="dialog">
+      <select name="selectedItem" id="selectedItem" v-model="selectedItem">
+        <option v-for="notbag in notbagsJSON" :value="notbag">
+          {{ notbag }}
+        </option>
+      </select>
+      <button @click="addItemToBackpack(selectedItem)">Add to Backpack</button>
+    </div>
+  </div>
 
-  <select name="selectedBag" id="selectedBag" v-model="selectedBag">
-    <option v-for="bag in bagsJSON" :value="bag">{{ bag }}</option>
-  </select>
-  <button @click="addItemToBackpack(selectedBag)">Add to Backpack</button>
+  <div class="select-area">
+    <span class="subtitle">Backpacks</span>
+    <div class="dialog">
+      <select name="selectedBag" id="selectedBag" v-model="selectedBag">
+        <option v-for="bag in bagsJSON" :value="bag">{{ bag }}</option>
+      </select>
+      <button @click="addItemToBackpack(selectedBag)">Add to Backpack</button>
+    </div>
+  </div>
 </template>
 
 <style>
+.select-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
+.subtitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
 </style>
