@@ -3,6 +3,9 @@ import * as PIXI from "pixi.js";
 import { onMounted } from "vue";
 import AceOfSpades from "./AceOfSpades.png";
 import Banana from "../img/items/Banana.png"
+import itemsJSON from './items.json'
+
+// make sure the bags are on a lower layer than the items
 
 onMounted(() => {
   const app = new PIXI.Application({
@@ -126,16 +129,10 @@ onMounted(() => {
                 Create a 1x2 item.
                 Place and rotate the item on the grid
     -->
-  <div id="canvas">
-    <!-- grid - 7 slots tall, 9 slots wide -->
-  </div>
+    <select name="cars" id="cars">
+        <option v-for="item in itemsJSON" :value="item">{{item}}</option>
+    </select>
 </template>
 
 <style>
-/* #canvas {
-  background: #999999;
-  height: 500px;
-  width: 500px;
-  margin: 10px;
-} */
 </style>

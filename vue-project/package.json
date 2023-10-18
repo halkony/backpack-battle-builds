@@ -16,7 +16,6 @@
     "pixi.js": "^7.3.1",
     "sass": "^1.69.3",
     "three": "^0.157.0",
-    "vue": "^3.3.4",
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
