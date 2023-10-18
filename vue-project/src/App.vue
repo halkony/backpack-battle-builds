@@ -15,11 +15,24 @@
 
   <!-- a div containing all items that can be click and dragged -->
   <div class="items">
-    <img v-for="item in itemsJSON" :src="`../img/items/${item}.png`" />
+    <span class="itemSpan"><img class="item" v-for="item in itemsJSON" :src="`../img/items/${item}.png`" /></span>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss">// makes the items small in the items dive but bigger when dragged to the backpack
+.items {
+  display: flex;
+  flex-wrap: wrap
+}
+
+.item {
+  // scale image to 20% of its original size
+  background: red;
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+}
+
 .social-bar {
   display: flex;
   justify-content: center;
