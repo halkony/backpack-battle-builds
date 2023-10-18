@@ -34,9 +34,6 @@ import SocialBar from "./SocialBar.vue";
 
 <style lang="scss">
 // makes the items small in the items dive but bigger when dragged to the backpack
-.main-app {
-  display: flex;
-}
 
 body {
   font-family: sans-serif;

@@ -94,6 +94,9 @@ onMounted(() => {
     if (event.code === "KeyE") {
       dragTarget.rotation -= ROTATIONAMOUNT;
     }
+    if (event.code === "KeyX") {
+      deleteDragTarget();
+    }
   });
 });
 // if the item is being dragged, whenever r is press, the item rotates 90 degrees clockwise
@@ -122,7 +125,13 @@ function onDragEnd() {
   }
 }
 
-createItem("AceofSpades", 100, 100);
+function deleteDragTarget() {
+  if (dragTarget) {
+    app.stage.removeChild(dragTarget);
+    dragTarget = null;
+  }
+}
+
 app.stage.addChild(graphics);
 
 let elapsed = 0.0;
@@ -139,38 +148,49 @@ app.ticker.add((delta) => {
                 Create a 1x2 item.
                 Place and rotate the item on the grid
     -->
-  <div class="select-area">
-    <span class="subtitle">Items</span>
-    <div class="dialog">
-      <select name="selectedItem" id="selectedItem" v-model="selectedItem">
-        <option v-for="notbag in notbagsJSON" :value="notbag">
-          {{ notbag }}
-        </option>
-      </select>
-      <button @click="addItemToBackpack(selectedItem)">Add to Backpack</button>
+  <div class="user-inputs">
+    <div class="select-area">
+      <span class="subtitle">Bags</span>
+      <div class="dialog">
+        <select name="selectedBag" id="selectedBag" v-model="selectedBag">
+          <option v-for="bag in bagsJSON" :value="bag">{{ bag }}</option>
+        </select>
+        <button @click="addItemToBackpack(selectedBag)">Add to Backpack</button>
+      </div>
     </div>
-  </div>
-
-  <div class="select-area">
-    <span class="subtitle">Backpacks</span>
-    <div class="dialog">
-      <select name="selectedBag" id="selectedBag" v-model="selectedBag">
-        <option v-for="bag in bagsJSON" :value="bag">{{ bag }}</option>
-      </select>
-      <button @click="addItemToBackpack(selectedBag)">Add to Backpack</button>
+    <div class="select-area">
+      <span class="subtitle">Items</span>
+      <div class="dialog">
+        <select name="selectedItem" id="selectedItem" v-model="selectedItem">
+          <option v-for="notbag in notbagsJSON" :value="notbag">
+            {{ notbag }}
+          </option>
+        </select>
+        <button @click="addItemToBackpack(selectedItem)">
+          Add to Backpack
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <style>
 .select-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .subtitle {
-    font-size: 1.5rem;
-    font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.user-inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #999999;
+  gap: 25px;
 }
 </style>
