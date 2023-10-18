@@ -36,7 +36,7 @@ app.stage.hitArea = app.screen;
 app.stage.on('pointerup', onDragEnd);
 app.stage.on('pointerupoutside', onDragEnd);
 
-  const texture = PIXI.Texture.from("https://pixijs.com/assets/bunny.png");
+  const texture = PIXI.Texture.from(AceOfSpades);
   function createItem(x, y) {
     // create our little bunny friend..
     const item = new PIXI.Sprite(texture);
@@ -49,9 +49,11 @@ app.stage.on('pointerupoutside', onDragEnd);
 
     // center the bunny's anchor point
     item.anchor.set(0.5);
+    // set item.pivot to the sprites center
+    // item.pivot.set(item.width / 2, item.height / 2);
 
     // make it a bit bigger, so it's easier to grab
-    item.scale.set(3);
+    item.scale.set(0.5);
 
     // setup events for mouse + touch using
     // the pointer events
@@ -102,12 +104,14 @@ app.stage.on('pointerupoutside', onDragEnd);
   //   let container = document.body.getElementById("canvas");
   document.body.appendChild(app.view);
 
+  const ROTATIONAMOUNT = 2*Math.PI/4;
+
   document.addEventListener('keydown',  (event) => {
     if (event.code === 'KeyR') {
-      dragTarget.rotation += 90;
+      dragTarget.rotation += ROTATIONAMOUNT;
     }
     if (event.code === 'KeyE') {
-      dragTarget.rotation -= 90;
+      dragTarget.rotation -= ROTATIONAMOUNT;
     }
   });});
 </script>
