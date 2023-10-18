@@ -1,75 +1,48 @@
 <script setup>
-import * as contentful from "contentful";
-import { ref, computed } from "vue";
-
-
-const name = "Natedog"
-const jobTitle = "Software Engineer"
-const company = "Nate's Company"
-
-const client = contentful.createClient({
-  space: "imxvjgy0efpu",
-  environment: "master", // defaults to 'master' if not set
-  accessToken: "EjpljZZcaunI7ZT9dtUJV3ImPJUQ37I_hdMs4zPbgoQ",
-});
-
-let postsFromAPI = ref([]);
-client
-  .getEntries()
-  .then((entries) => (postsFromAPI.value = entries.items))
-  .catch(console.error);
-
-
-
-let thumbnail = (post) => {
-  return post.fields.thumbnail.fields.file.url;
-};
-
-let title = (post) => {
-  return post.fields.title;
-};
-
-let body = (post) => {
-  return post.fields.body.content[0].content[0].value;
-};
-
-let imageUrl = (post) => {
-  return post.fields.thumbnail.fields.file.url;
-};
-
-// compute posts with the above functions from api
-let posts = computed(() => {
-  return postsFromAPI.value.map((post) => {
-    return {
-      thumbnail: thumbnail(post),
-      title: title(post),
-      body: body(post),
-      imageUrl: imageUrl(post),
-    };
-  });
-});
-console.log(posts);
+  import { onMounted } from 'vue';
+  import itemsJSON from './items.json'
 </script>
 
 <template>
-  <h1>{{ name }}</h1>
-  <h2>{{ jobTitle }}</h2>
-  <h3>{{ company }}</h3>
-  <hr />
-  <div class="posts-container">
-    <div class="post" v-for="post in posts" :key="post.title">
-      <img
-        class="thumbnail"
-        :src="post.imageUrl"
-      />
-      <div class="post-preview">
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.body }}</p>
-      </div>
-    </div>
+  <h1>Backpack Battles Builds</h1>
+  <div class="backpack">
+    <!-- grid - 7 slots tall, 9 slots wide -->
+  </div>
+  <!-- a button that says, share this build! -->
+  <div class="social-bar">
+    <button>Copy image to clipboard</button>
+  </div>
+
+  <!-- a div containing all items that can be click and dragged -->
+  <div class="items">
+    <img v-for="item in itemsJSON" :src="`../img/items/${item}.png`" />
   </div>
 </template>
 
 <style lang="scss">
-@import "@/assets/main.scss";
+.social-bar {
+  display: flex;
+  justify-content: center;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+// @import "@/assets/main.scss";
+.backpack {
+  background: blue;
+  height: 200px;
+  width: 500px;
+  margin: 10px;
+}
+
+.items {
+  background: blue;
+  height: 200px;
+  width: 500px;
+  margin: 10px;
+}
 </style>
