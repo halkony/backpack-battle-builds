@@ -2,6 +2,7 @@
 import * as PIXI from "pixi.js";
 import { onMounted } from "vue";
 import AceOfSpades from "./AceOfSpades.png";
+import Banana from "../img/items/Banana.png"
 
 onMounted(() => {
   const app = new PIXI.Application({
@@ -31,14 +32,14 @@ onMounted(() => {
 
   let dragTarget = null;
 
-app.stage.eventMode = 'static';
-app.stage.hitArea = app.screen;
-app.stage.on('pointerup', onDragEnd);
-app.stage.on('pointerupoutside', onDragEnd);
+  app.stage.eventMode = "static";
+  app.stage.hitArea = app.screen;
+  app.stage.on("pointerup", onDragEnd);
+  app.stage.on("pointerupoutside", onDragEnd);
 
-  const texture = PIXI.Texture.from(AceOfSpades);
-  function createItem(x, y) {
+  function createItem(itemImage, x, y) {
     // create our little bunny friend..
+    const texture = PIXI.Texture.from(itemImage);
     const item = new PIXI.Sprite(texture);
 
     // enable the bunny to be interactive... this will allow it to respond to mouse and touch events
@@ -93,7 +94,8 @@ app.stage.on('pointerupoutside', onDragEnd);
   }
 
   app.stage.addChild(graphics);
-  createItem(100, 100);
+  createItem(AceOfSpades, 100, 100);
+  createItem(Banana, 200, 200)
 
   let elapsed = 0.0;
   app.ticker.add((delta) => {
@@ -104,16 +106,17 @@ app.stage.on('pointerupoutside', onDragEnd);
   //   let container = document.body.getElementById("canvas");
   document.body.appendChild(app.view);
 
-  const ROTATIONAMOUNT = 2*Math.PI/4;
+  const ROTATIONAMOUNT = (2 * Math.PI) / 4;
 
-  document.addEventListener('keydown',  (event) => {
-    if (event.code === 'KeyR') {
+  document.addEventListener("keydown", (event) => {
+    if (event.code === "KeyR") {
       dragTarget.rotation += ROTATIONAMOUNT;
     }
-    if (event.code === 'KeyE') {
+    if (event.code === "KeyE") {
       dragTarget.rotation -= ROTATIONAMOUNT;
     }
-  });});
+  });
+});
 </script>
 
 <template>
