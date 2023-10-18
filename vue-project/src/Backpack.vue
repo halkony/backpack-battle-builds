@@ -39,31 +39,32 @@ app.stage.on('pointerupoutside', onDragEnd);
   const texture = PIXI.Texture.from("https://pixijs.com/assets/bunny.png");
   function createItem(x, y) {
     // create our little bunny friend..
-    const bunny = new PIXI.Sprite(texture);
+    const item = new PIXI.Sprite(texture);
 
     // enable the bunny to be interactive... this will allow it to respond to mouse and touch events
-    bunny.eventMode = "static";
+    item.eventMode = "static";
 
     // this button mode will mean the hand cursor appears when you roll over the bunny with your mouse
-    bunny.cursor = "pointer";
+    item.cursor = "pointer";
 
     // center the bunny's anchor point
-    bunny.anchor.set(0.5);
+    item.anchor.set(0.5);
 
     // make it a bit bigger, so it's easier to grab
-    bunny.scale.set(3);
+    item.scale.set(3);
 
     // setup events for mouse + touch using
     // the pointer events
-    bunny.on("pointerdown", onDragStart, bunny);
+    item.on("pointerdown", onDragStart, item);
 
     // move the sprite to its designated position
-    bunny.x = x;
-    bunny.y = y;
+    item.x = x;
+    item.y = y;
 
     // add it to the stage
-    app.stage.addChild(bunny);
+    app.stage.addChild(item);
   }
+  // if the item is being dragged, whenever r is press, the item rotates 90 degrees clockwise
 
   function onDragMove(event) {
     if (dragTarget) {
@@ -100,7 +101,12 @@ app.stage.on('pointerupoutside', onDragEnd);
   });
   //   let container = document.body.getElementById("canvas");
   document.body.appendChild(app.view);
-});
+
+  document.addEventListener('keydown',  (event) => {
+    if (event.code === 'KeyR') {
+      dragTarget.rotation += 90;
+    }
+  });});
 </script>
 
 <template>
