@@ -160,12 +160,14 @@ app.ticker.add((delta) => {
       <span class="subtitle">Bags</span>
       <div class="dialog">
         <ui-select v-model="selectedBag" :options="bagOptions" @selected="addItemToBackpack(selectedBag)"></ui-select>
+        <button @click="addItemToBackpack(selectedBag)">+1</button>
       </div>
     </div>
     <div class="select-area">
       <span class="subtitle">Items</span>
       <div class="dialog">
         <ui-select v-model="selectedItem" :options="itemOptions" @selected="addItemToBackpack(selectedItem)"></ui-select>
+        <button @click="addItemToBackpack(selectedItem)">+1</button>
       </div>
     </div>
   </div>
