@@ -6,7 +6,7 @@
       <img src="../img/items/LeatherBag.png" />
     </div>
     <div class="instructions">
-      Press X while dragging item to delete it. Press E and R to rotate. Spawn
+      Press X while dragging item to delete it. Press E or R to rotate. Spawn
       the bags first because I can't get the layering right ;(
     </div>
   </header>
