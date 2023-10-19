@@ -2,6 +2,18 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 
+import BalmUI from 'balm-ui'; // Official Google Material Components
+import BalmUIPlus from 'balm-ui-plus'; // BalmJS Team Material Components
+import 'balm-ui-css';
+
+const app = createApp(App)
+
+app.use(BalmUI);
+app.use(BalmUIPlus);
+app.use(createPinia())
+
+app.mount('#app')
+
 
 // Your hair is fair
 // As the summer gamer sweat
@@ -18,9 +30,3 @@ import App from './App.vue'
 // I love your cajoling
 // I will be your sub
 // Until your head starts rolling <3
-
-const app = createApp(App)
-
-app.use(createPinia())
-
-app.mount('#app')

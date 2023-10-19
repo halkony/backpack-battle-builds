@@ -5,7 +5,14 @@ import notbagsJSON from "./notbags.json";
 import bagsJSON from "./bags.json";
 import { Layer } from "@pixi/layers";
 
-// make sure the bags are on a lower layer than the items
+// create json object where value and label are equal to each item of itemsJSON
+let itemOptions = notbagsJSON.map((item) => {
+  return { value: item, label: item };
+});
+
+let bagOptions = bagsJSON.map((item) => {
+  return { value: item, label: item };
+});
 
 const app = new PIXI.Application({
   background: "#1099bb",
@@ -112,7 +119,7 @@ function onDragStart() {
   // the reason for this is because of multitouch
   // we want to track the movement of this particular touch
   // this.data = event.data;
-    this.alpha /= 2;
+  this.alpha /= 2;
   dragTarget = this;
   app.stage.on("pointermove", onDragMove);
 }
@@ -152,23 +159,13 @@ app.ticker.add((delta) => {
     <div class="select-area">
       <span class="subtitle">Bags</span>
       <div class="dialog">
-        <select name="selectedBag" id="selectedBag" v-model="selectedBag">
-          <option v-for="bag in bagsJSON" :value="bag">{{ bag }}</option>
-        </select>
-        <button @click="addItemToBackpack(selectedBag)">Add to Backpack</button>
+        <ui-select v-model="selectedBag" :options="bagOptions" @selected="addItemToBackpack(selectedBag)"></ui-select>
       </div>
     </div>
     <div class="select-area">
       <span class="subtitle">Items</span>
       <div class="dialog">
-        <select name="selectedItem" id="selectedItem" v-model="selectedItem">
-          <option v-for="notbag in notbagsJSON" :value="notbag">
-            {{ notbag }}
-          </option>
-        </select>
-        <button @click="addItemToBackpack(selectedItem)">
-          Add to Backpack
-        </button>
+        <ui-select v-model="selectedItem" :options="itemOptions" @selected="addItemToBackpack(selectedItem)"></ui-select>
       </div>
     </div>
   </div>
