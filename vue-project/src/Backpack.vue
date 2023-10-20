@@ -4,8 +4,10 @@ import { onMounted } from "vue";
 import notbagsJSON from "./notbags.json";
 import bagsJSON from "./bags.json";
 import { Layer } from "@pixi/layers";
+import { PlacementGrid } from "./js/BackpackBattles.js";
 
 // create json object where value and label are equal to each item of itemsJSON
+// had to make this to use the BalmUI dropdown component
 let itemOptions = notbagsJSON.map((item) => {
   return { value: item, label: item };
 });
@@ -22,22 +24,34 @@ const app = new PIXI.Application({
 var graphics = new PIXI.Graphics();
 graphics.beginFill(0xffff00);
 
-const gridWidth = 9;
-const gridHeight = 7;
+// RENDER GRID LOGIC
 
-const SLOT_SIZE = 70;
+let placementGrid = new PlacementGrid();
 
-// draw rectangles in a grid
-for (let i = 0; i < gridWidth; i++) {
-  for (let j = 0; j < gridHeight; j++) {
-    if ((i + j) % 2 == 0) {
-      graphics.beginFill(0x777777);
-    } else {
-      graphics.beginFill(0x444444);
-    }
-    graphics.drawRect(i * SLOT_SIZE, j * SLOT_SIZE, SLOT_SIZE, SLOT_SIZE);
+const SLOT_SIZE_IN_PIXELS = 70;
+
+placementGrid.slots.forEach((slot) => {
+  if ((slot.coordinate.x + slot.coordinate.y) % 2 == 0) {
+    graphics.beginFill(0x777777);
+  } else {
+    graphics.beginFill(0x444444);
   }
-}
+  graphics.drawRect(
+    (slot.coordinate.x - 1) * SLOT_SIZE_IN_PIXELS,
+    (slot.coordinate.y - 1) * SLOT_SIZE_IN_PIXELS,
+    SLOT_SIZE_IN_PIXELS,
+    SLOT_SIZE_IN_PIXELS
+  );
+});
+
+// for (let i = 0; i < gridWidth; i++) {
+//   for (let j = 0; j < gridHeight; j++) {
+
+//     graphics.drawRect(i * SLOT_SIZE, j * SLOT_SIZE, SLOT_SIZE, SLOT_SIZE);
+//   }
+// }
+
+// DRAG AND DROP LOGIC
 
 let dragTarget = null;
 
@@ -70,7 +84,7 @@ function createItem(itemName, x, y) {
   // item.pivot.set(item.width / 2, item.height / 2);
 
   // make it a bit bigger, so it's easier to grab
-  item.scale.set(SLOT_SIZE * 0.006);
+  item.scale.set(SLOT_SIZE_IN_PIXELS * 0.006);
 
   // setup events for mouse + touch using
   // the pointer events
@@ -159,14 +173,22 @@ app.ticker.add((delta) => {
     <div class="select-area">
       <span class="subtitle">Bags</span>
       <div class="dialog">
-        <ui-select v-model="selectedBag" :options="bagOptions" @selected="addItemToBackpack(selectedBag)"></ui-select>
+        <ui-select
+          v-model="selectedBag"
+          :options="bagOptions"
+          @selected="addItemToBackpack(selectedBag)"
+        ></ui-select>
         <button @click="addItemToBackpack(selectedBag)">+1</button>
       </div>
     </div>
     <div class="select-area">
       <span class="subtitle">Items</span>
       <div class="dialog">
-        <ui-select v-model="selectedItem" :options="itemOptions" @selected="addItemToBackpack(selectedItem)"></ui-select>
+        <ui-select
+          v-model="selectedItem"
+          :options="itemOptions"
+          @selected="addItemToBackpack(selectedItem)"
+        ></ui-select>
         <button @click="addItemToBackpack(selectedItem)">+1</button>
       </div>
     </div>
